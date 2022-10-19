@@ -37,12 +37,70 @@
     - '<p>My favorite number is {'7'}</p>'
 
 # Components
+- Reusable code segments
+- Need to import them to use them
+
+## What does a component need to have?
+
+'''
+import React from 'react';
+
+const component = () => {
+  return(
+    {/* Component */}
+  )
+}
+
+export default component
+'''
+
+## How to use a component
+
+<Component />
+
+# Index
+- Everything in 'Index.js' is what is displayed in your browser
+- 'Using document.getEleemntbyId('root')' we render our react code into an HTML element
+- html is located in '/public/index/index.html'
+
+## React DOM
+- Used to render what is on your screen
+
+## 'React.StrictMode'
+- We receive a warning if React deects there might be any potential problems with the code it wraps
+
+## Props
+- pass 'props' into a component as a paramter 
+- e.g.
+'''
+import React from 'react';
+
+const component = (props) => {
+  return(
+    {props.text}
+    {props.text}
+  )
+}
+
+export default component
+'''
+
+## State
+- Another way to pass around data
+- e.g. Whether a door is opened or closed
+- e.g. balance of a bank account
+
+## Hooks
+- used to engage in state management
+
+## useState
+- 'const [count, setCount] = useState(0);'
+- count will automatically get set to 0 or any value passed in
+- the second variable (setCount) will automatically become an updater function
+- e.g. setCount(count + 1) will set the count to count + 1
 
 
-
-
-
-  
-
+## Rendering
+- React only re-renders your screen when state is updated
 
 
