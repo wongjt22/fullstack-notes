@@ -224,9 +224,174 @@ export default Example;
 
 # React Router
 - Rather than creating a route for each video on youtube, use dynamic routing to display countless similar pages using a variable in the URL
+- Routing is client-side rather than having to reload your entire app all over again
 
 [Documentation](https://v5.reactrouter.com/web/guides/quick-start)
 
 Installation
 'yarn add react-router-dom'
+
+## Basic Routing
+'''
+import React from 'react';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        {/* The HTML */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* The React Router that makes the HTML above work */}
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
+};
+
+const Home = () => <h2>Home</h2>;
+const About = () => <h2>About</h2>;
+const Users = () => <h2>Users</h2>;
+
+export default App;
+'''
+
+## Dynamic Routing
+- What if we have too many routes to write down manually?
+'''
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from 'react-router-dom';
+
+function DynamicRouting() {
+  const data = [
+    { name: 'Netflix', route: 'netflix' },
+    { name: 'Zillow', route: 'zillow' },
+    { name: 'Yahoo', route: 'yahoo' },
+    { name: 'Instagram', route: 'instagram' },
+  ];
+
+  return (
+    <Router>
+      <div>
+        <h2>Accounts</h2>
+
+        <div>
+          {data.map((item) => (
+            <Link to={`/${item.route}`}>
+              <div>
+                <h3>{item.name}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <Switch>
+          <Route path="/:id" children={<Child />} />
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+function Child() {
+  let { id } = useParams();
+
+  return (
+    <div>
+      <h3>{id}</h3>
+    </div>
+  );
+}
+
+export default DynamicRouting;
+'''
+
+## Complet Routing - WDB Website example
+'''
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import Navbar from './components/navbar';
+import Footer from './components/footer';
+
+import Landing from './pages/landing';
+import About from './pages/about';
+import Initiatives from './pages/initiatives';
+import Error from './pages/error';
+
+import './App.scss';
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Navbar landing />
+        </Route>
+        <Route path="*">
+          <Navbar />
+        </Route>
+      </Switch>
+
+      <Switch>
+        {/* About Us */}
+        <Route path="/about">
+          <About />
+        </Route>
+
+        {/* Initiatives */}
+        <Route path="/initiatives">
+          <Initiatives />
+        </Route>
+
+        {/* Landing Page */}
+        <Route exact path="/">
+          <Landing />
+        </Route>
+
+        {/* 404 no page found */}
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
+
+      <Footer />
+    </Router>
+  );
+}
+
+export default App;
+''
+
+The exact prop tells our router to only show the landing version of the navbar when there are no extensions to the URL, which makes sense since we want our landing page to be the default page. Using * as the path for our regular navbar tells the router that for all other pages, render the regular navbar.
+
+Using a single variable as a prop (such as exact or landing above) is equivalent to setting exact={true} or landing={true} as a prop. Thus we just use exact or landing instead of the whole statement as shorthand.
 
